@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -16,6 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private AudioSource shaking;
 
+    private PhotonView view;
 
     // Start is called before the first frame update
     void Start()
@@ -23,21 +26,24 @@ public class GameManager : MonoBehaviour
         anim.enabled = false;
         init_pos_1 = dice_1.position;
         init_pos_2 = dice_2.position;
+        view = GetComponent<PhotonView>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (view.IsMine)
         {
-            anim.enabled = true;
-            shaking.Play();
-            anim.Rebind();
-            dice_1.position = init_pos_1;
-            dice_2.position = init_pos_2;
-            //DiceBoth();
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                anim.enabled = true;
+                shaking.Play();
+                anim.Rebind();
+                dice_1.position = init_pos_1;
+                dice_2.position = init_pos_2;
+                //DiceBoth();
+            }
         }
-
     }
 
     public void DiceBoth()
