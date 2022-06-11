@@ -18,6 +18,9 @@ public class DiceController : MonoBehaviour
     [SerializeField]
     private AudioSource colliding_with_ground;
 
+    [SerializeField]
+    private Vector3 torque;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -58,7 +61,8 @@ public class DiceController : MonoBehaviour
         transform.rotation = initial_rot;
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
-        rb.AddTorque(new Vector3(Random.Range(-range, range), Random.Range(-range, range), Random.Range(-range, range)), ForceMode.Impulse);
+        torque = new Vector3(Random.Range(-range, range), Random.Range(-range, range), Random.Range(-range, range));
+        rb.AddTorque(torque, ForceMode.Impulse);
         rb.AddForce(transform.forward * forwardForce - transform.up * downForce, ForceMode.Impulse);
     }
 
